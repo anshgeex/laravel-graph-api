@@ -22,7 +22,10 @@
                 <div class="card-body">
                     {{-- Search and disconnect account buttons --}}
                     <div class="mailSearch">
-                        <a href="/deleteUser" class="btn btn-primary" style="float: left">Disconnect Account</a>
+                        <div class="form-group pull-left">
+                            <a href="/deleteUser" class="btn btn-primary" style="float: left">Disconnect Account</a>
+                            <a href="/mails" class="btn btn-primary" style="float: right; margin-left: 10px;">Refresh</a>
+                        </div>
                         <div class="form-group pull-right">
                             <input type="text" value="{{Session::get('search')}}" class="search form-control" placeholder="What are you looking for?">
                         </div>

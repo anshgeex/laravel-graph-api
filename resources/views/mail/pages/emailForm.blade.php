@@ -27,7 +27,7 @@
 
                     <!-- Submit button to send the email -->
                     <div class="form-group">
-                        <input type="submit" class="btn btn-success">
+                        <input type="submit" value="Send" class="btn btn-success">
                     </div>
                 </div>
             </form>

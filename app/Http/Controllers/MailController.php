@@ -38,7 +38,7 @@ class MailController extends Controller
         if ($response->ok()) {
             // Handle successful response
             $emails = $response->json()['value'];
-            
+
             if (!empty($emails)) {
                 foreach ($emails as $email) {
                     // Check if the email already exists in the database
@@ -64,7 +64,7 @@ class MailController extends Controller
             }
 
             // Paginate the retrieved emails and return them
-            $emails = MailList::orderBy('receivedDateTime', 'desc')->paginate(2);
+            $emails = MailList::orderBy('receivedDateTime', 'desc')->paginate(10);
             return $emails;
         } else {
             // Handle error response
@@ -81,13 +81,13 @@ class MailController extends Controller
      */
     public function searchMail(Request $request)
     {
-        if($request->key == ''){   
+        if($request->key == ''){
             Session::forget('search');
         }
         $serchHistory = Session::get('search') ? Session::get('search') : '';
         $key = isset($request->key) ? $request->key : $serchHistory;
         // Retrieve emails from the database that match the search key
-        $emails = MailList::where('subject', 'like', '%' . $key . '%')->orderBy('receivedDateTime', 'desc')->paginate(2);
+        $emails = MailList::where('subject', 'like', '%' . $key . '%')->orderBy('receivedDateTime', 'desc')->paginate(10);
         // Return the view with the search results
         if($request->ajax()){
             Session::put('search',$request->key);

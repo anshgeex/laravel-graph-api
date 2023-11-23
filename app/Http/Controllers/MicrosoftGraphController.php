@@ -23,7 +23,7 @@ class MicrosoftGraphController extends Controller
     public static function getCode()
     {
         // Redirect the user to the Microsoft login page with the necessary parameters
-        return redirect('https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?client_id='.env('MS_CLIENT_ID').'e&response_type=code&redirect_uri=https%3A%2F%2Fleadcenter.localhost%2Fauth%2Fmicrosoft%2Foauth2-callback&response_mode=query&scope=offline_access%20User.Read%20Mail.Read%20Mail.Send&state=12345');
+        return redirect('https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?client_id='.env('MS_CLIENT_ID').'&response_type=code&redirect_uri=https%3A%2F%2Fleadcenter.localhost%2Fauth%2Fmicrosoft%2Foauth2-callback&response_mode=query&scope=offline_access%20User.Read%20Mail.Read%20Mail.Send&state=12345');
     }
 
     /**
