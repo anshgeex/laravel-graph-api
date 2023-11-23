@@ -24,7 +24,7 @@
                     <div class="mailSearch">
                         <a href="/deleteUser" class="btn btn-primary" style="float: left">Disconnect Account</a>
                         <div class="form-group pull-right">
-                            <input type="text" class="search form-control" placeholder="What are you looking for?">
+                            <input type="text" value="{{Session::get('search')}}" class="search form-control" placeholder="What are you looking for?">
                         </div>
                     </div>
 

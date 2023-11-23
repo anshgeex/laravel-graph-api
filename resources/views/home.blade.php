@@ -14,6 +14,12 @@
                             </div>
                         @endif
 
+                        @if(Session::has('message'))
+                            <div class="alert {{Session::get('alert-class')}}">
+                                {{Session::get('message')}}
+                            </div>
+                        @endif
+
                         {{ __('You are logged in!') }} &nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-primary" href="/getCode">
                             Connect To Microsoft
                             Account</a>

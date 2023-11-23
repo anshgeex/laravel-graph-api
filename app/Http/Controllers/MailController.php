@@ -68,7 +68,7 @@ class MailController extends Controller
             return $emails;
         } else {
             // Handle error response
-            $error = $response->json()['error']['message'];
+            $error = $response->json()['error']['code'];
             return $error;
         }
     }
@@ -81,13 +81,21 @@ class MailController extends Controller
      */
     public function searchMail(Request $request)
     {
+        if(!isset($request->key) || $request->key == ''){   
+            Session::forget('search');
+        }
+        $serchHistory = Session::get('search') ? Session::get('search') : '';
+        $key = isset($request->key) ? $request->key : $serchHistory;
         // Retrieve emails from the database that match the search key
-        $emails = MailList::where('subject', 'like', '%' . $request->key . '%')->orderBy('receivedDateTime', 'desc')->paginate(2);
+        $emails = MailList::where('subject', 'like', '%' . $key . '%')->orderBy('receivedDateTime', 'desc')->paginate(2);
         // Return the view with the search results
-        if($request->ajax())
+        if($request->ajax()){
+            Session::put('search',$request->key);
             return response()->json(View::make('mail.pages.emailList', ['emails' => $emails])->render());
-        else
+        }
+        else{
             return view('mail.list', compact('emails'));
+        }
     }
 
     /**
@@ -100,6 +108,11 @@ class MailController extends Controller
     {
         // Get emails and return the view with the list
         $emails = $this->getMail();
+        if(Session::has('access_token') && $emails === 'InvalidAuthenticationToken'){
+            Session::flash('message', 'Token has been expired.');
+            Session::flash('alert-class', 'alert-danger');
+            return redirect('/home');
+        }
         return view('mail.list', compact('emails'));
     }
 
