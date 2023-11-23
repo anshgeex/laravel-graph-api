@@ -81,7 +81,7 @@ class MailController extends Controller
      */
     public function searchMail(Request $request)
     {
-        if(!isset($request->key) || $request->key == ''){   
+        if($request->key == ''){   
             Session::forget('search');
         }
         $serchHistory = Session::get('search') ? Session::get('search') : '';
@@ -108,6 +108,7 @@ class MailController extends Controller
     {
         // Get emails and return the view with the list
         $emails = $this->getMail();
+        Session::forget('search');
         if(Session::has('access_token') && $emails === 'InvalidAuthenticationToken'){
             Session::flash('message', 'Token has been expired.');
             Session::flash('alert-class', 'alert-danger');
