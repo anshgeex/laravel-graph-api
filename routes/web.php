@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['checkMicrosoftSession'])->group(function () {
 
         // Microsoft Graph API user management routes
-        // Route::get('/getUser', [App\Http\Controllers\MailController::class, 'getUser']);
+        Route::get('/createUser', [App\Http\Controllers\MicrosoftGraphController::class, 'createUser']);
         Route::get('/deleteUser', [App\Http\Controllers\MicrosoftGraphController::class, 'deleteUser']);
         Route::get('/getAccessToken', [App\Http\Controllers\MicrosoftGraphController::class, 'getAccessToken']);
 

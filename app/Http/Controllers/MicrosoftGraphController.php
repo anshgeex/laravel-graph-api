@@ -82,4 +82,50 @@ class MicrosoftGraphController extends Controller
         Session::forget('access_token');
         return redirect('/home');
     }
+
+    public function createUser(Request $request)
+    {
+        $graphApiEndpoint = 'https://graph.microsoft.com/v1.0/users';
+
+        // Set your access token
+        $accessToken = Session::get('access_token');
+
+        // Set user data
+        $userData = [
+            'accountEnabled' => true,
+            'displayName' => 'testing user0909',
+            'userPrincipalName' => 'abhishek.codegeex@gmail.com',
+            'passwordProfile' => [
+                'forceChangePasswordNextSignIn' => false,
+                'password' => 'xWwvJ]6NMw+bWH-d',
+            ],
+        ];
+
+        // Convert user data to JSON
+        $jsonData = json_encode($userData);
+
+        // Set cURL options
+        // $ch = curl_init($graphApiEndpoint);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        //     'Authorization: Bearer ' . $accessToken,
+        //     'Content-Type: application/json',
+        // ]);
+        $ch = curl_init($graphApiEndpoint);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $accessToken,
+        ]);
+
+        // Execute cURL and get the response
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            echo 'Error: ' . curl_error($ch);exit;
+        }
+        print_r($response);exit;
+    }
 }
